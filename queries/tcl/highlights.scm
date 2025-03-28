@@ -49,6 +49,14 @@
                     name: (simple_word) @string)))
     (#eq? @keyword "switch"))
 
+["regsub"] @function.builtin @function
+
+(regsub_switch) @attribute
+
+(regsub
+    pattern: (_) @string.regex
+    substitution: (_) @string.regex)
+
 (command
   name: (simple_word) @function.builtin @function
   (#any-of? @function.builtin
@@ -60,7 +68,6 @@
    "join"
    "puts"
    "regexp"
-   "regsub"
    "split"
    "subst"
    "trace"
@@ -99,6 +106,7 @@
           "lsearch"
           "lset"
           "lsort"
+          "on"
           "package"
           "return"
           "trap"

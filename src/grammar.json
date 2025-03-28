@@ -117,6 +117,204 @@
         }
       ]
     },
+    "regsub": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "TOKEN",
+            "content": {
+              "type": "PREC",
+              "value": 1,
+              "content": {
+                "type": "STRING",
+                "value": "regsub"
+              }
+            }
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_regsub_switches"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "FIELD",
+            "name": "pattern",
+            "content": {
+              "type": "SYMBOL",
+              "name": "regsub_literal"
+            }
+          },
+          {
+            "type": "FIELD",
+            "name": "input",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_word"
+            }
+          },
+          {
+            "type": "FIELD",
+            "name": "substitution",
+            "content": {
+              "type": "SYMBOL",
+              "name": "regsub_literal"
+            }
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "id",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_word_simple"
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_word"
+            }
+          }
+        ]
+      }
+    },
+    "_regsub_switches": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "SYMBOL",
+        "name": "regsub_switch"
+      }
+    },
+    "regsub_switch": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "REPEAT1",
+        "content": {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "-all"
+                },
+                {
+                  "type": "STRING",
+                  "value": "-expanded"
+                },
+                {
+                  "type": "STRING",
+                  "value": "-line"
+                },
+                {
+                  "type": "STRING",
+                  "value": "-linestop"
+                },
+                {
+                  "type": "STRING",
+                  "value": "-lineanchor"
+                },
+                {
+                  "type": "STRING",
+                  "value": "-nocase"
+                },
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "-start"
+                    },
+                    {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "number"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "variable_substitution"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "STRING",
+                  "value": "--"
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": " "
+            }
+          ]
+        }
+      }
+    },
+    "regsub_braced_literal": {
+      "type": "TOKEN",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "{"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[^}]*"
+          },
+          {
+            "type": "STRING",
+            "value": "}"
+          }
+        ]
+      }
+    },
+    "regsub_literal": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "regsub_braced_literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "quoted_word"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "simple_word"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "variable_substitution"
+        }
+      ]
+    },
     "while": {
       "type": "SEQ",
       "members": [

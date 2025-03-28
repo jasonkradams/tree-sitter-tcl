@@ -72,6 +72,59 @@ module.exports = grammar({
       repeat($._concat_word),
     ),
 
+    // ------------------------------------------------------------------------
+    // regsub ?switches? exp string subSpec ?varName?
+    // ------------------------------------------------------------------------
+    regsub: $ => prec.left(
+      seq(
+        token(prec(1, 'regsub')),
+        optional($._regsub_switches),
+        field('pattern', $.regsub_literal),
+        field('input', $._word),
+        field('substitution', $.regsub_literal),
+        optional(field('id', $._word_simple)),
+        repeat($._word),
+      ),
+    ),
+
+    _regsub_switches: $ => repeat1($.regsub_switch),
+
+    regsub_switch: $ =>
+      prec.left(
+        repeat1(
+          seq(
+            choice(
+              '-all',
+              '-expanded',
+              '-line',
+              '-linestop',
+              '-lineanchor',
+              '-nocase',
+              seq('-start', choice($.number, $.variable_substitution)),
+              '--',
+            ),
+            ' ',
+          ),
+        ),
+      ),
+
+    regsub_braced_literal: $ => token(seq('{', /[^}]*/, '}')),
+
+    /*
+          regsub_literal accepts an argument as one of:
+            - a braced literal (e.g. {pattern})
+            - a quoted literal (e.g. "pattern")
+            - a simple word (e.g. pattern)
+          Each is parsed as a single token.
+        */
+    regsub_literal: $ =>
+      choice(
+        $.regsub_braced_literal,
+        $.quoted_word,
+        $.simple_word,
+        $.variable_substitution,
+      ),
+
     while: $ => seq('while', $.expr, $._word),
 
     expr_cmd: $ => seq('expr', $.expr),
